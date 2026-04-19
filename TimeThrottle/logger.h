@@ -1,0 +1,9 @@
+
+#ifndef TIMETHROTTLE_LOGGER_H
+#define TIMETHROTTLE_LOGGER_H
+
+
+void InitLogging();
+
+
+#endif //TIMETHROTTLE_LOGGER_H
