@@ -1,8 +1,8 @@
 #include <windows.h>
 
 #include "net_delay.h"
-#include "app_config.h"
-#include "spdlog/spdlog.h"
+#include "../core/app_config.h"
+#include "../lib/spdlog/include/spdlog/spdlog.h"
 #include <iostream>
 
 #pragma comment(lib, "ws2_32.lib")

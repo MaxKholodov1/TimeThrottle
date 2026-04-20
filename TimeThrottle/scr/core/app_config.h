@@ -35,7 +35,7 @@ public:
     void AddDomain(const std::string& domain);
     void RemoveDomain(const std::string& domain);
     void ClearDomains();
-    const std::set<std::string>& GetDomains() const;
+    std::set<std::string> GetDomains() const;
 
     void SetTimer(int minutes);
     bool IsTimerActive() const;

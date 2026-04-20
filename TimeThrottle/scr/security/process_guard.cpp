@@ -1,5 +1,5 @@
 #include "process_guard.h"
-#include <spdlog/spdlog.h>
+#include <../lib/spdlog/include/spdlog/spdlog.h>
 #include <iostream>
 
 const WCHAR* szName = L"Local\\MySharedMem";

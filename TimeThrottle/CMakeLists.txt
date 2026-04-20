@@ -22,26 +22,29 @@ FetchContent_MakeAvailable(json)
 # Список исходных файлов
 add_executable(${PROJECT_NAME}
         main.cpp
-        monitor.cpp
-        monitor.h
-        net_delay.cpp
-        net_delay.h
-        utils.cpp
-        utils.h
-        app_config.cpp
-        app_config.h
-        proxy_server.cpp
-        proxy_server.h
-        logger.cpp
-        logger.h
-        process_guard.cpp
-        process_guard.h
+        scr/monitor/monitor.cpp
+        scr/monitor/monitor.h
+        scr/network/net_delay.cpp
+        scr/network/net_delay.h
+        scr/system/utils.cpp
+        scr/system/utils.h
+        scr/core/app_config.cpp
+        scr/core/app_config.h
+        scr/network/proxy_server.cpp
+        scr/network/proxy_server.h
+        scr/core/logger.cpp
+        scr/core/logger.h
+        scr/core/console_commands.cpp
+        scr/core/console_commands.h
+        scr/security/process_guard.cpp
+        scr/security/process_guard.h
 )
 
 # Пути к заголовкам (spdlog и твои либы)
 target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/lib
+        ${CMAKE_SOURCE_DIR}/scr
         ${CMAKE_SOURCE_DIR}/lib/spdlog/include
+        ${CMAKE_SOURCE_DIR}/lib
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

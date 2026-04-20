@@ -8,8 +8,8 @@
 #include <set>
 #include <mutex>
 #include <map>
-#include "windivert.h"
-#include "app_config.h"
+#include "../lib/windivert.h"
+#include "../core/app_config.h"
 
 
 class NetDelay {

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <windows.h>
-#include "app_config.h"
+#include "../core/app_config.h"
 
 std::string WideToUtf8(const std::wstring& w);
 std::string GetProcessNameUtf8(DWORD pid);

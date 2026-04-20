@@ -1,5 +1,5 @@
 #include "app_config.h"
-#include "utils.h"
+#include "../system/utils.h"
 #include "spdlog/spdlog.h"
 #include <iostream>
 #include <fstream>
@@ -78,7 +78,7 @@ void AppConfig::ClearDomains() {
     std::cout << "[Config] clear blocked_domains \n";
 }
 
-const std::set<std::string>& AppConfig::GetDomains() const {
+std::set<std::string> AppConfig::GetDomains() const {
     std::lock_guard<std::mutex> lock(mtx);
     return blocked_domains;
 }
@@ -131,7 +131,7 @@ bool Blacklist::IsVideoStreaming(const std::string &domain) {
     return false;
 }
 bool Blacklist::IsCustomDomain(const std::string& domain) {
-    const auto& custom = AppConfig::Instance().GetDomains();
+    const auto custom = AppConfig::Instance().GetDomains();
     for (const auto& item : custom) {
         if (domain.find(item) != std::string::npos) return true; // проверяем, содержится ли ключевое слово в домене
     }

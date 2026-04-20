@@ -8,19 +8,23 @@
 #include "spdlog/spdlog.h"
 
 ProxyServer::ProxyServer(NetDelay* netDelay, uint16_t port)
-        : netDelay(netDelay), port(port), running(false) {}
+        : netDelay(netDelay), port(port) {}
 
 ProxyServer::~ProxyServer() {
     Stop();
 }
 
 void ProxyServer::Start() {
-    running = true;
+    if (running.exchange(true)) {
+        return;
+    }
     serverThread = std::thread(&ProxyServer::Run, this);
 }
 
 void ProxyServer::Stop() {
-    running = false;
+    if (!running.exchange(false)) {
+        return;
+    }
 
     if (listenSocket != INVALID_SOCKET) {
         // Это  поток из ожидания
@@ -72,11 +76,11 @@ void ProxyServer::Run() {
 
     std::cout << "[Proxy] Listening on port " << port << "\n";
 
-    while(running){
+    while(running.load()){
         // принимаем новых клиентов и создаем для них новый socket, через который и будет общаться proxy с этим клинетом
         SOCKET clientSocket = accept(listenSocket, nullptr, nullptr); // второй и третий параметры address и adress len
 
-        if (!running) break;
+        if (!running.load()) break;
 
         if (clientSocket == INVALID_SOCKET) continue;
 
@@ -167,7 +171,7 @@ void ProxyServer::TunnelSockets(SOCKET client, SOCKET remote) const {
     fd_set readfds;
     char buf[16384]; // Буфер  (16 КБ)
 
-    while (running) {
+    while (running.load()) {
         FD_ZERO(&readfds);      // Очищаем набор дескрипторов
         FD_SET(client, &readfds); // Добавляем сокет клиента
         FD_SET(remote, &readfds); // Добавляем сокет сервера

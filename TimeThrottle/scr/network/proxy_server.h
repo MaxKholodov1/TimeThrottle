@@ -4,6 +4,7 @@
 #include <thread>
 #include <vector>
 #include <iostream>
+#include <atomic>
 #include "net_delay.h"
 
 #pragma comment(lib, "ws2_32.lib")
@@ -20,7 +21,7 @@ private:
     uint16_t port;
     std::thread serverThread;
     SOCKET listenSocket = INVALID_SOCKET;
-    bool running;
+    std::atomic<bool> running{false};
 
     void Run();
     void HandleClient(SOCKET clientSocket);
