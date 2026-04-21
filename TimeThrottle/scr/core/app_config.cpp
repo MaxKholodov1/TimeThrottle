@@ -118,7 +118,7 @@ void AppConfig::SaveToFile() {
 
 bool Blacklist::IsMessenger(const std::string& domain) {
     for (const auto& item : Messenger) {
-        // проверяем, содержится ли ключевое слово в домене
+        // проверяем содержится ли ключевое слово в домене
         // (чтобы блокировать и www.telegram.org, и web.telegram.org)
         if (domain.find(item) != std::string::npos) return true;
     }
@@ -126,14 +126,14 @@ bool Blacklist::IsMessenger(const std::string& domain) {
 }
 bool Blacklist::IsVideoStreaming(const std::string &domain) {
     for (const auto& item : VideoStreaming) {
-        if (domain.find(item) != std::string::npos) return true; // проверяем, содержится ли ключевое слово в домене
+        if (domain.find(item) != std::string::npos) return true; // проверяем содержится ли ключевое слово в домене
     }
     return false;
 }
 bool Blacklist::IsCustomDomain(const std::string& domain) {
     const auto custom = AppConfig::Instance().GetDomains();
     for (const auto& item : custom) {
-        if (domain.find(item) != std::string::npos) return true; // проверяем, содержится ли ключевое слово в домене
+        if (domain.find(item) != std::string::npos) return true; // проверяем содержится ли ключевое слово в домене
     }
     return false;
 }

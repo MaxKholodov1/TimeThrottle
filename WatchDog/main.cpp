@@ -16,7 +16,6 @@ void initLogging() {
 
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
-        // создаем логгер, который пишет в оба места сразу
         std::vector<spdlog::sink_ptr> sinks {file_sink, console_sink};
         auto logger = std::make_shared<spdlog::logger>("watchdog", sinks.begin(), sinks.end());
 
@@ -31,7 +30,7 @@ void initLogging() {
 }
 
 int main(int argc, char* argv[]) {
-    // 1. Собственный мьютекс вочдога (чтобы не запустить два вочдога)
+    // Собственный мьютекс вочдога (чтобы не запустить два вочдога)
     HANDLE hSelfMutex = CreateMutexW(NULL, TRUE, L"Global\\WatchDog_Unique_Mutex");
     if (hSelfMutex == NULL || GetLastError() == ERROR_ALREADY_EXISTS) {
         return 0;

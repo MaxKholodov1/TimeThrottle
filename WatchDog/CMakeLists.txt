@@ -3,6 +3,7 @@ project(WatchDog)
 
 if(MSVC)
     add_compile_options(/utf-8)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
 

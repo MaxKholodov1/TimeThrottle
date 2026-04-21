@@ -8,7 +8,6 @@ std::wstring GetProgramDataPath() {
     PWSTR path_tmp;
     path_tmp = nullptr;
 
-    // FOLDERID_ProgramData — это константа для C:\ProgramData
     HRESULT hr = SHGetKnownFolderPath(FOLDERID_ProgramData, 0, NULL, &path_tmp);
 
     if (SUCCEEDED(hr)) {
@@ -68,7 +67,7 @@ bool CheckAppFiles(const std::filesystem::path& securePath){
             }
 
             if (std::filesystem::file_size(filePath) == 0) {
-                return false; // Если файл пустой — тоже false
+                return false; // Если файл пустой false
             }
         } catch (const std::filesystem::filesystem_error& e) {
             // Если файл занят все ок
@@ -89,11 +88,11 @@ bool CheckLauncherFiles(const std::filesystem::path& securePath) {
         std::filesystem::path filePath = securePath / fileName;
         try {
             if (!std::filesystem::exists(filePath)) {
-                return false; // Если хоть одного файла нет — сразу false
+                return false; // Если хоть одного файла нет сразу false
             }
 
             if (std::filesystem::file_size(filePath) == 0) {
-                return false; // Если файл пустой — тоже false
+                return false; // Если файл пустой   false
             }
         } catch (const std::filesystem::filesystem_error& e) {
             // Если файл занят все ок
@@ -208,18 +207,15 @@ void RegisterTaskXML(const fs::path& exePath) {
         xmlFile.close();
     }
 
-    // 4. Формируем команду.
-    // /TN берем в кавычки на случай пробелов в имени
     std::string importCmd = "schtasks /Create /XML \"" + xmlPath + "\" /TN \"" + taskName + "\" /F";
 
-    // Выполняем
     int result = system(importCmd.c_str());
 
     if (result == 0) {
         std::cout << "Successfully registered task!" << std::endl;
     }
 
-    // 5. Удаляем временный файл
+    //  Удаляем временный файл
     if (fs::exists(xmlPath)) {
         fs::remove(xmlPath);
     }

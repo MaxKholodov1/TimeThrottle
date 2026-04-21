@@ -29,13 +29,13 @@ void NetDelay::Start() {
 void NetDelay::Stop() {
     running = false;
 
-    // Закрываем дескриптор WinDivert, чтобы вывести RunLoop из ожидания
+    // Закрываем дескриптор WinDivert чтобы вывести RunLoop из ожидания
     if (hDivert != INVALID_HANDLE_VALUE) {
         WinDivertClose(hDivert);
         hDivert = INVALID_HANDLE_VALUE;
     }
 
-    if (worker_thread.joinable()) { // Ждем, пока поток корректно завершится
+    if (worker_thread.joinable()) { // Ждем пока поток корректно завершится
         worker_thread.join();
     }
 }
@@ -47,7 +47,7 @@ void NetDelay::ForceMapDomain(uint32_t ip, const std::string &domain) {
 
 
 void NetDelay::RunLoop() {
-    // открываем WinDivert (фильтруем только входящий/исходящий TCP трафик)
+    // открываем WinDivert
     hDivert = WinDivertOpen("tcp", WINDIVERT_LAYER_NETWORK, 0, 0);
 
     if (hDivert == INVALID_HANDLE_VALUE) {

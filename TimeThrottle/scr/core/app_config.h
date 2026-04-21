@@ -41,14 +41,7 @@ public:
     bool IsTimerActive() const;
     long long GetRemainingSeconds() const;
 
-   /* // Для CPU (добавь позже)
-    void AddProcess(const std::string& process_name);
-    void RemoveProcess(const std::string& process_name);
-    void ClearProcesses();
-    const std::set<std::string>& GetProcesses() const;
 
-    void SetCpuLimit(double percent);  // 0..100
-    double GetCpuLimit() const;*/
 
 private:
     AppConfig() = default;
@@ -58,7 +51,7 @@ private:
     mutable std::mutex mtx;
     Mode current_mode = Mode::OFF;
     int network_delay_ms = 0;
-    double cpu_limit_percent = 100.0;  // 100 = без ограничения
+    double cpu_limit_percent = 100.0;
     std::time_t timer_end_timestamp = 0;
     std::set<std::string> blocked_domains;
     std::set<std::string> target_processes;

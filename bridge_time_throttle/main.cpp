@@ -24,7 +24,6 @@ int main() {
     InitBridgeLogging();
     spdlog::info("--- Bridge Instance Started ---");
 
-    //  бинарный режим а не текстовый
     _setmode(_fileno(stdin), _O_BINARY);
     _setmode(_fileno(stdout), _O_BINARY);
 
@@ -39,7 +38,7 @@ int main() {
             break;
         }
 
-        // 2. ЧТЕНИЕ ТЕЛА СООБЩЕНИЯ
+        // чтение сообщения
         std::string jsonStr(length, '\0');
         std::cin.read(&jsonStr[0], length);
 
@@ -65,7 +64,7 @@ int main() {
             }
             CloseHandle(hPipe);
         } else {
-            // Если Pipe не найден (TimeThrottle выключен), просто логируем это как trace
+            // если Pipe не найден (TimeThrottle выключен)
             spdlog::trace("Main app Pipe not available");
         }
     }

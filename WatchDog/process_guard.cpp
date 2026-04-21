@@ -15,7 +15,7 @@ void ProcessGuard::StartProtection(const std::wstring& timeThrottlePath) {
 
     RunHeartBeat();
 
-    // 3. Запускаем мониторинг самого timeThrottle
+    //  Запускаем мониторинг самого timeThrottle
     monitorThread = std::thread([this, timeThrottlePath]() {
         const std::wstring timeThrottleMutexName = L"Global\\TimeThrottle_Unique_Mutex";
 
@@ -123,7 +123,7 @@ ProcessGuard::~ProcessGuard() {
     StopProtection();
 }
 
-// Вспомогательные функции (оставляем твою логику)
+
 bool ProcessGuard::IsProcessAlive(const std::wstring& mutexName) {
     HANDLE h = OpenMutexW(SYNCHRONIZE, FALSE, mutexName.c_str());
     if (h) {
@@ -162,12 +162,9 @@ void ProcessGuard::KillProcessByName(const std::wstring &filename) {
 
     if (Process32FirstW(hSnapShot, &pEntry)) {
         do {
-            // Compare the process name (case-insensitive for better results)
             if (_wcsicmp(pEntry.szExeFile, filename.c_str()) == 0) {
-                // Open the process with PROCESS_TERMINATE access
                 HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, 0, pEntry.th32ProcessID);
                 if (hProcess != NULL) {
-                    // Terminate the process (exit code 9 for force)
                     TerminateProcess(hProcess, 9);
                     CloseHandle(hProcess);
                     std::wcout << L"Killed process: " << filename << std::endl;

@@ -7,7 +7,7 @@ const WCHAR* szName = L"Local\\MySharedMem";
 void ProcessGuard::StartProtection(const std::wstring& watchdogPath) {
     if (running) return;
 
-    // 1. Инициализируем общую память ДО запуска потоков
+    //  Инициализируем общую память ДО запуска потоков
     if (!InitSharedMemory()) {
         spdlog::error("Критическая ошибка: Не удалось создать Shared Memory.");
         return;
@@ -15,10 +15,10 @@ void ProcessGuard::StartProtection(const std::wstring& watchdogPath) {
 
     running = true;
 
-    // 2. Запускаем обновление пульса
+    //  Запускаем обновление пульса
     RunHeartBeat();
 
-    // 3. Запускаем мониторинг самого Watchdog
+    //  Запускаем мониторинг самого Watchdog
     monitorThread = std::thread([this, watchdogPath]() {
         const std::wstring watchdogMutexName = L"Global\\WatchDog_Unique_Mutex";
 
@@ -131,7 +131,6 @@ ProcessGuard::~ProcessGuard() {
     StopProtection();
 }
 
-// Вспомогательные функции (оставляем твою логику)
 bool ProcessGuard::IsProcessAlive(const std::wstring& mutexName) {
     HANDLE h = OpenMutexW(SYNCHRONIZE, FALSE, mutexName.c_str());
     if (h) {
